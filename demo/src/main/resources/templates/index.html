@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultivus</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-text">
+                <h1>Cultivus</h1>
+                <p>Gestión inteligente de tu inventario</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="nav">
+            <h2> Stock de Productos</h2>
+            <a th:href="@{/create}" class="btn">
+                Agregar Producto
+            </a>
+        </div>
+
+        <div class="empty-state" th:if="${productos == null or productos.empty}">
+            <h2> No hay productos disponibles</h2>
+            <p>Comienza agregando tu primer producto al inventario</p>
+        </div>
+        
+        <div class="products-grid" th:if="${productos != null and !productos.empty}">
+            <div class="product-card" th:each="producto : ${productos}">
+
+                <img th:src="${producto.imageUrl}" th:alt="${producto.name}" class="product-image"
+                    onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjhmOWZhIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzY2NjY2NiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPk5vIEltYWdlbjwvdGV4dD48L3N2Zz4='">
+
+                <div class="product-info">
+                    <h3 class="product-name" th:text="${producto.name}">Nombre del Producto</h3>
+                    <p class="product-description" th:text="${producto.description}">Descripción del producto</p>
+                    <div class="product-price" th:text="'$' + ${#numbers.formatDecimal(producto.price, 1, 2)}">$0.00
+                    </div>
+                    <div class="product-actions">
+
+                        <a th:href="@{/editar/{id}(id=${producto.id})}" class="btn btn-small">✏️ Editar</a>
+
+                        <a th:href="@{/eliminar/{id}(id=${producto.id})}" class="btn btn-small btn-danger"
+                            onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?')">🗑️
+                            Eliminar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>

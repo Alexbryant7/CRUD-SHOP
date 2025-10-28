@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${producto.id != null} ? 'Editar Producto - ShopAI' : 'Crear Producto - ShopAI'"></title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="container">
+
+        <div class="card form-container">
+            <h2 class="form-title" th:text="${producto.id != null} ? '✏️ Editar Producto' : '➕ Crear Nuevo Producto'"></h2>
+
+            <form th:action="@{/guardar}" th:object="${producto}" method="post">
+                <input type="hidden" th:field="*{id}">
+                <div class="form-group">
+                    <label for="name">📝 Nombre del Producto:</label>
+                    <input type="text" id="name" th:field="*{name}" required 
+                           placeholder="Ej: iPhone 15 Pro Max">
+                </div>
+
+                <div class="form-group">
+
+                    <label for="description">📄 Descripción:</label>
+
+                    <textarea id="description" th:field="*{description}" required 
+                              placeholder="Describe las características principales del producto..."
+                              rows="4"></textarea>
+                
+                            
+                </div>
+
+                <div class="form-group">
+                    <label for="price">💰 Precio:</label>
+
+                    <input type="number" id="price" step="0.01" th:field="*{price}" required 
+                           placeholder="0,00" min="0">
+                </div>
+
+                <div class="form-group">
+                    
+                    <label for="imageUrl">🖼️ URL de la Imagen:</label>
+                    <input type="url" id="imageUrl" th:field="*{imageUrl}"
+                           placeholder="https://ejemplo.com/imagen.jpg">
+                    <small style="color: #666; font-size: 0.9rem; margin-top: 5px; display: block;">
+                        💡 Tip: Puedes usar URLs de imágenes de internet o subir a servicios como Imgur
+                    </small>
+                </div>
+
+                <div style="text-align: center; margin-top: 30px;">
+
+                    <button type="submit" class="btn btn-success" >
+                        <span th:text="${producto.id != null} ? '💾 Actualizar Producto' : '➕ Crear Producto'"></span>
+                    </button>
+
+                </div>
+            </form>
+   
+
+            <div style="text-align: center; margin-top: 20px;">
+                <a th:href="@{/}" class="back-link">← Volver al inventario</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
