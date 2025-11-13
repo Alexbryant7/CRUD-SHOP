@@ -1,0 +1,31 @@
+<header th:fragment="siteHeader">
+    <link rel="stylesheet" th:href="@{/header.css}">
+    
+    <div class="main-header">
+        <div class="header-container">
+            <nav class="nav-links">
+                <a th:href="@{/}" style="text-decoration: none; color: inherit;">
+                    <h2>Cultivus</h2>
+                </a>
+                <ul>
+                    <li><a th:href="@{/}">Inicio</a></li>
+
+                    <!-- Mostrar botón de login solo si NO hay usuario -->
+                    <li th:if="${session.usuarioLogueado == null}">
+                        <a th:href="@{/login}">Ingresa</a>
+                    </li>
+
+                    <li th:if="${/session.usuarioLogueado != null}">
+                        <a th:href="@{/register}">Registrarse</a></li>
+
+                    <li><a th:href="@{/create}">crear producto</a></li>
+
+                     <!-- Mostrar nombre y logout si SÍ hay usuario -->
+                     <li th:if="${session.usuarioLogueado != null}">
+                        <span th:text="'Hola, ' + ${session.usuarioLogueado.name}">Hola, Usuario</span>
+                        <a th:href="@{/logout}" class="logout-btn">Cerrar sesión</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
