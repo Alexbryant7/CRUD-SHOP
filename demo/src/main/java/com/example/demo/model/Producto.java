@@ -13,6 +13,10 @@ public class Producto {
     private double price;
     private String imageUrl;
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private User usuario;
+
     // Constructor por defecto
     public Producto() {
     }
@@ -73,5 +77,12 @@ public class Producto {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+    // 🔥 Getters/setters de usuario (lo que faltaba)
+    public User getUsuario() {
+        return usuario;
+    }
+    public void setUsuario(User usuario) {
+        this.usuario = usuario;
     }
 }

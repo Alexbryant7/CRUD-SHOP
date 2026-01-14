@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.example.demo.model.Producto;
+import com.example.demo.model.User;
 import com.example.demo.service.ServiceStock;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,14 +38,19 @@ public class ControllerStock {
     }
 
     @PostMapping("/guardar") // agregar
-    public String guardarProducto(@ModelAttribute Producto producto,HttpSession session) {
+    public String guardarProducto(@ModelAttribute Producto producto, HttpSession session) {
 
-        Object usuario = session.getAttribute("usuarioLogueado");
+        // 1. Obtener el usuario desde sesión
+        User usuario = (User) session.getAttribute("usuarioLogueado");
 
-         //   if (usuario != null) {
-        //        producto.setPublicadoPor(usuario.toString());
-       //     }
 
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+    
+        // 2. Asignar el usuario al producto (muy importante)
+        producto.setUsuario(usuario);
+        
         if (producto.getId() != null) {
             service.actualizar(producto);
         } else {

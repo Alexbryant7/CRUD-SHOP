@@ -15,10 +15,15 @@
                         <a th:href="@{/login}">Ingresa</a>
                     </li>
 
-                    <li th:if="${/session.usuarioLogueado != null}">
-                        <a th:href="@{/register}">Registrarse</a></li>
+                    <li th:if="${session.usuarioLogueado == null}">
+                        <a th:href="@{/register}">Registrarse</a>
+                    </li>
 
-                    <li><a th:href="@{/create}">crear producto</a></li>
+                    <li><a th:href="@{/create}">Agregar Producto</a></li>
+
+                    <li th:if="${session.usuarioLogueado != null}">
+                        <a th:href="@{/myProducts}">Mis Productos</a>
+                    </li>
 
                      <!-- Mostrar nombre y logout si SÍ hay usuario -->
                      <li th:if="${session.usuarioLogueado != null}">

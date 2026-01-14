@@ -30,13 +30,18 @@
                 <p class="product-description" th:text="${P.description}">Descripción del producto</p>
                 <div class="product-price" th:text="'$' + ${#numbers.formatDecimal(P.price, 1, 2)}">$0.00
                 </div>
+                <p class="seller">
+                    Vendido por: <span th:text="${P.usuario.name}"></span>
+                </p>
+
                 <div class="product-actions">
 
-                    <a th:href="@{/editar/{id}(id=${P.id})}" class="btn btn-small">✏️ Editar</a>
+                    <a th:if="${session.usuarioLogueado != null and P.usuario.id == session.usuarioLogueado.id}"
+                        th:href="@{/editar/{id}(id=${P.id})}" class="btn btn-small">✏️ Editar</a>
 
-                    <a th:href="@{/eliminar/{id}(id=${P.id})}" class="btn btn-small btn-danger"
-                        onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?')">🗑️
-                        Eliminar</a>
+                    <a th:if="${session.usuarioLogueado != null and P.usuario.id == session.usuarioLogueado.id}"
+                        th:href="@{/eliminar/{id}(id=${P.id})}" class="btn btn-small btn-danger"
+                        onclick="return confirm('¿Seguro de eliminar?')">🗑️ Eliminar</a>
                 </div>
             </div>
         </div>

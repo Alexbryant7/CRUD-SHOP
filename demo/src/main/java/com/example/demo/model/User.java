@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +17,9 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Producto> productos;
 
     // ✅ Constructor vacío requerido por JPA
     public User() {
@@ -39,6 +44,10 @@ public class User {
         return password;
     }
 
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -49,6 +58,10 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
     }
 }
 
